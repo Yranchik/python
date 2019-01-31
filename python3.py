@@ -17,7 +17,7 @@ class PythonOrgSearch(unittest.TestCase):
         self.assertIn("Pega", driver.title)
 
         loginField = driver.find_element_by_id("txtUserID")
-        loginField.send_keys("ddukov@test")
+        loginField.send_keys("akondratyev@test")
 
         passwordField = driver.find_element_by_id("txtPassword")
         passwordField.send_keys("rules")
@@ -57,8 +57,37 @@ class PythonOrgSearch(unittest.TestCase):
                 )
             finally:
                 summaryInfo = driver.find_element_by_xpath("//h3[text() = 'Общая информация']")
-                driver.save_screenshot("screen4.png")
+                #driver.save_screenshot("screen4.png")
                 summaryInfo.click()
+
+                select = Select(driver.find_element_by_xpath("//select[@id='CcdTypeId']"))
+                select.select_by_value("Limit")
+                try:
+                    element = WebDriverWait(driver, 10).until(
+                        EC.visibility_of_element_located((By.XPATH, "//select[@id='LimitTypeId']"))
+                    )
+                finally:
+                     select1 = Select(driver.find_element_by_xpath("//select[@id='LimitTypeId']"))
+                     select1.select_by_value("LimitCredit")
+
+                dateEstimateField = driver.find_element_by_xpath("//input[@id='CreditCommitteeDateEstimate']")
+                dateEstimateField.send_keys("05.02.2019")
+
+                govPlace = Select(driver.find_element_by_xpath("//select[@id='AuthorizedBodyId']"))
+                govPlace.select_by_value("2")
+
+                govFilial = Select(driver.find_element_by_xpath("//select[@id='LoanDivisionId']"))
+                govFilial.select_by_value("BrMmrcd")
+
+                nextStage = Select(driver.find_element_by_xpath("//select[@id='NextStage']"))
+                nextStage.select_by_value("Structuring")
+
+                completeBtn = driver.find_element_by_xpath("//img[@alt='Выполнить']")
+                completeBtn.click()
+                driver.save_screenshot("screen4.png")
+
+
+
 
 
 
