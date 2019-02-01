@@ -19,8 +19,11 @@ class PythonOrgSearch(unittest.TestCase):
        driver.implicitly_wait(10)
 
        course = driver.find_element_by_xpath("//td[@class='weak']")
-       x = int(course.text)
+       x = course.text
        print(x)
+       line = x.replace('руб.', '').split(' ')[1]
+       print(line)
+
 
 
 
