@@ -15,9 +15,10 @@ class PythonOrgSearch(unittest.TestCase):
         driver.get("http://vtbcmo-qa-2.bpm.lanit:21828/prweb/PRServlet/")
         driver.implicitly_wait(10)
         self.assertIn("Pega", driver.title)
+        USER = "ddukov@test"
 
         loginField = driver.find_element_by_id("txtUserID")
-        loginField.send_keys("akondratyev@test")
+        loginField.send_keys(USER)
 
         passwordField = driver.find_element_by_id("txtPassword")
         passwordField.send_keys("rules")
@@ -63,7 +64,7 @@ class PythonOrgSearch(unittest.TestCase):
                 select = Select(driver.find_element_by_xpath("//select[@id='CcdTypeId']"))
                 select.select_by_value("Limit")
                 try:
-                    element = WebDriverWait(driver, 10).until(
+                    element = WebDriverWait(driver, 15).until(
                         EC.visibility_of_element_located((By.XPATH, "//select[@id='LimitTypeId']"))
                     )
                 finally:
